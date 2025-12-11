@@ -19,19 +19,19 @@ const InputBox = ({
 
       <div className="flex gap-3 items-center">
         <input
+        value={amount}
           type="number"
           placeholder="Enter amount"
           className="w-full bg-white text-gray-700 rounded-sm p-3 border"
           disabled={AmountDisable}
           onChange={(e) =>
-            onAmountChange && onAmountChange(Number(e.target.value))
+          onAmountChange && onAmountChange(Number(e.target.value))
           }
         />
 
-        {/* fixed width select so it doesn't collapse */}
         <select
+         value={selectCurrency}
           className="w-24 bg-white p-3 rounded-sm border shrink-0"
-          value={selectCurrency}
           onChange={(e) => onCurrencyChange && onCurrencyChange(e.target.value)}
           disabled={currencyDisable}
         >

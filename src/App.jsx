@@ -1,22 +1,23 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import InputBox from "./components/InputBox";
 import "./App.css";
-import Swapbtn from "./components/Swapbtn";
 import useCurrencyInfo from "./hooks/useCurrencyInfo";
 
 const App = () => {
   const [amount, setamount] = useState(0);
-  const [from, setfrom] = useState("USD");
-  const [to, setTo] = useState("INR");
+  const [from, setFrom] = useState("usd");
+  const [to, setTo] = useState("inr");
   const [convertedAmount, setconvertedAmount] = useState(0);
 
   const currencyInfo = useCurrencyInfo(from);
   const option = Object.keys(currencyInfo);
 
-  
-
   const convert = () => {
     setconvertedAmount(amount * currencyInfo[to]);
+  };
+
+    const swap = () => {
+    setTo(from), setFrom(to);
   };
 
   return (
@@ -27,7 +28,6 @@ const App = () => {
       }}
     >
       <form
-        action=""
         onSubmit={(e) => {
           e.preventDefault();
           convert();
@@ -35,23 +35,31 @@ const App = () => {
       >
         <div className="w-[360px] bg-gray-300 p-6 rounded-lg shadow-xl space-y-4">
           <InputBox
-            label={"from"}
+            label="From"
             amount={convertedAmount}
-            onCurrencyChange={(currency) => {setamount(amount);}}
+            onCurrencyChange={(currency) => {
+              setamount(amount);
+            }}
             selectCurrency="from"
-            AmountDisable
-            onAmountChange={(amount)=>setamount(amount)}
+            onAmountChange={(amount) => setamount(amount)}
             currencyOptions={option}
           />
-          <Swapbtn 
-          
-          />
-          <InputBox 
-          label={"To"}
+          <div className="flex justify-center p-2">
+            <button
+              className="bg-blue-500 w-auto rounded-sm shadow-xl p-2 py-1 text-white hover:bg-blue-600"
+              onClick={swap}
+            >
+              Swap
+            </button>
+          </div>
+          <InputBox
+            label="To"
             amount={convertedAmount}
-            onCurrencyChange={(currency) => {setTo(currency);}}
+            onCurrencyChange={(currency) => {
+              setTo(currency);
+            }}
             selectCurrency="To"
-            AmountDisable
+            
             currencyOptions={option}
           />
           <button
